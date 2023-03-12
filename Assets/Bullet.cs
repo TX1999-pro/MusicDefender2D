@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
-
     [SerializeField] private float lifeTime = 5f;
 
     internal void DestroySelf()

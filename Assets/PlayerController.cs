@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,12 +21,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeed;
     [SerializeField] private OSCReceiver receiver;
 
+
     [SerializeField] private AudioSource sfx;
     [SerializeField] private Transform speaker;
     [SerializeField] private AudioClip shooting;
     [SerializeField] private float coolDownTime = 0.5f;
     [SerializeField] private Bullet bulletPrefab;
     private float shootTimer;
+    [SerializeField] private Color pitchColour = new (245, 40, 145, 255);
 
     void Start()
     {
@@ -46,7 +50,7 @@ public class PlayerController : MonoBehaviour
         shootTimer += Time.deltaTime;         
         if (isMusicDetected)
         {
-            ShootBullet();
+            ShootBullet(pitchColour); // ShootBulletOfColour(Color pitchColour);
         }
 
 
@@ -68,16 +72,23 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void ShootBullet()
+    void ShootBullet(Color m_colour)
     {
 
         if (shootTimer > coolDownTime)
         {
             shootTimer = 0f;
-
-            Instantiate(bulletPrefab, speaker.position, Quaternion.identity);
+            // InstantiateBullet()
+            GenerateBulletOfColour(m_colour);
             GameManager._instance.PlaySfx(shooting);
         }
+    }
+
+    void GenerateBulletOfColour(Color m_colour)
+    {
+        Bullet newBullet = Instantiate(bulletPrefab, speaker.position, Quaternion.identity);
+        SpriteRenderer rend = newBullet.GetComponent<SpriteRenderer>();
+        rend.color = m_colour;  //  change the color after it is instantiated
     }
 
     void PositionMessageReceived(OSCMessage message)
