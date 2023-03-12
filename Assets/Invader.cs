@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
-
+    [SerializeField] private string m_pitch;
     internal void DestroySelf()
     {
         gameObject.SetActive(false);
@@ -21,8 +21,17 @@ public class Invader : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy collided with " + other.collider.name);
-            DestroySelf();
+            Bullet bulletInCollision = other.gameObject.GetComponent<Bullet>(); 
+            Debug.Log("Enemy collided with " + bulletInCollision.PitchCode);
+
+            if (bulletInCollision.PitchCode == m_pitch)
+            // if code matches
+            {
+                DestroySelf();
+            }
+
+            // play mismatch animation
+            // misMatch();
         }
 
     }

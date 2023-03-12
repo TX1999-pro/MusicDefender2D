@@ -34,11 +34,12 @@ public class PlayerController : MonoBehaviour
     {
         address_1 = "/player/position";
         address_2 = "/player/audio/status"; // true/false
-        address_3 = "/player/audio/code"; // code name e.g. C3
+        address_3 = "/player/audio/pitch"; // pitch code name e.g. C3
         // get the receiver
         receiver = GetComponent<OSCReceiver>();
         receiver.Bind(address_1, PositionMessageReceived);
         receiver.Bind(address_2, MusicMessageReceived);
+        receiver.Bind(address_3, MusicMessageReceived);
     }
 
     // Update is called once per frame
@@ -48,10 +49,10 @@ public class PlayerController : MonoBehaviour
 
         // use a timer to control the wait time between shots
         shootTimer += Time.deltaTime;         
-        if (isMusicDetected)
-        {
-            ShootBullet(pitchColour); // ShootBulletOfColour(Color pitchColour);
-        }
+        //if (isMusicDetected)
+        //{
+        //    ShootBullet(pitchColour); // ShootBulletOfColour(Color pitchColour);
+        //}
 
 
 
@@ -72,21 +73,22 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void ShootBullet(Color m_colour)
+    void ShootBullet(String pitch,Color m_colour)
     {
 
         if (shootTimer > coolDownTime)
         {
             shootTimer = 0f;
             // InstantiateBullet()
-            GenerateBulletOfColour(m_colour);
+            GenerateBulletOfColour(pitch, m_colour);
             GameManager._instance.PlaySfx(shooting);
         }
     }
 
-    void GenerateBulletOfColour(Color m_colour)
+    void GenerateBulletOfColour(String pitch, Color m_colour)
     {
         Bullet newBullet = Instantiate(bulletPrefab, speaker.position, Quaternion.identity);
+        newBullet.PitchCode = pitch;
         SpriteRenderer rend = newBullet.GetComponent<SpriteRenderer>();
         rend.color = m_colour;  //  change the color after it is instantiated
     }
@@ -110,6 +112,7 @@ public class PlayerController : MonoBehaviour
     void MusicMessageReceived(OSCMessage message)
     {
         // control whether the sound is received (as if shoot button was pressed)
+        // Toggle shooting on and off
         if (message.ToInt(out var bo))
         {
             //Debug.Log(bo);
@@ -118,10 +121,23 @@ public class PlayerController : MonoBehaviour
             {
                 isMusicDetected = true;
             }
-        }
+        } 
+        else if (message.ToString(out var pitch))
+        {
+            isMusicDetected = true;
+            if (pitch == "C1")
+            {
+                pitchColour = new Color(0, 255, 25, 200);
+            }
+            else if (pitch == "D1")
+            {
+                pitchColour = new Color(0, 0, 255, 100);
+            }
+            ShootBullet(pitch, pitchColour);
+        } 
         else
         {
-            Debug.Log("Message type error. Integer required");
+            Debug.Log("Message Type error. Need integer or string");
         }
     }
 
