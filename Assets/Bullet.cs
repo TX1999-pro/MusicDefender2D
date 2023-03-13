@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] public string PitchCode;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 5f;
-    public string PitchCode { set; get; }
+
 
     internal void DestroySelf()
     {

@@ -18,9 +18,6 @@ public class PlayerController : MonoBehaviour
     public bool isMusicDetected;
 
     // dictionary seems not working, setting D1 as none
-    public Dictionary<string, Color> ColorDictionary = new ();
-
-
     [SerializeField] private GameObject player;
     [SerializeField] private float playerSpeed;
     [SerializeField] private OSCReceiver receiver;
@@ -34,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private float shootTimer;
     [SerializeField] private Color pitchColour = new (245, 40, 145, 255);
 
+    [SerializeField] private Dictionary<string, Color32> pitchCodeBook;
+
 
     void Start()
     {
@@ -45,16 +44,9 @@ public class PlayerController : MonoBehaviour
         receiver.Bind(address_1, PositionMessageReceived);
         receiver.Bind(address_2, MusicMessageReceived);
         receiver.Bind(address_3, MusicMessageReceived);
+        pitchCodeBook = FindObjectOfType<PitchCode>().CodeBook;
 
-        ColorDictionary.Add("A1", new Color(221, 96, 96, 255));
-        ColorDictionary.Add("B1", new Color(250, 155, 0, 255));
-        ColorDictionary.Add("C1", new Color(231, 211, 0, 255));
-        ColorDictionary.Add("D1", new Color(122, 184, 77, 255));
-        ColorDictionary.Add("E1", new Color(91, 216, 255, 255));
-        ColorDictionary.Add("F1", new Color(156, 119, 255, 255));
-        ColorDictionary.Add("G1", new Color(221, 24, 255, 255));
 
-        Debug.Log(ColorDictionary);
     }
 
     // Update is called once per frame
@@ -105,7 +97,9 @@ public class PlayerController : MonoBehaviour
         Bullet newBullet = Instantiate(bulletPrefab, speaker.position, Quaternion.identity);
         newBullet.PitchCode = pitch;
         SpriteRenderer rend = newBullet.GetComponent<SpriteRenderer>();
+        //print(m_colour);
         rend.color = m_colour;  //  change the color after it is instantiated
+        print(rend.color);
     }
 
     void PositionMessageReceived(OSCMessage message)
@@ -140,42 +134,48 @@ public class PlayerController : MonoBehaviour
         else if (message.ToString(out var pitch))
         {
             isMusicDetected = true;
-            print(pitch);
 
-            if (!ColorDictionary.ContainsKey(pitch))
-            {
-                Debug.Log(pitch + " is not in the dictionary");
-                return;
-            }
-            else
-            {
-                pitchColour = ColorDictionary[pitch];
-            }
-            //if (pitch == "C1")
+            //switch (pitch)
             //{
-            //    pitchColour = ColorDictionary["C1"];
+            //    case "A1":
+            //        pitchColour = new Color32(221, 96, 96, 255);
+            //        break;
+            //    case "B1":
+            //        pitchColour = new Color32(250, 155, 0, 255);
+            //        break;
+            //    case "C1":
+            //        pitchColour = new Color32(231, 211, 0, 255);
+            //        break;
+            //    case "D1":
+            //        pitchColour = new Color32(122, 184, 77, 255);
+            //        break;
+            //    case "E1":
+            //        pitchColour = new Color32(91, 216, 255, 255);
+            //        break;
+            //    case "F1":
+            //        pitchColour = new Color32(156, 119, 255, 255);
+            //        break;
+            //    case "G1":
+            //        pitchColour = new Color32(221, 24, 255, 255);
+            //        break;
             //}
-            //if (pitch == "D1")
-            //{
-            //    pitchColour = new Color(250, 155, 0, 255);
-            //    // pitchColour = ColorDictionary["D1"];
-            //}
-
-
-
 
             // create an expression to map the pitch to colour pallette 
             // DOESN"T WORK - can only generate the first key
-            //if (ColorDictionary.ContainsKey(pitch))
-            //// check if the upcoming pitch matches any dictionary key
-            //{
-            //    Color color = ColorDictionary[pitch];
-            //    pitchColour = color; // set the pitchColour to the corresponding color
-            //}
-            //else
-            //{
-            //    pitchColour = new Color(255, 255, 255, 255);
-            //}
+
+            if (pitchCodeBook.ContainsKey(pitch))
+            // check if the upcoming pitch matches any dictionary key
+            {
+                Color color = pitchCodeBook[pitch];
+                pitchColour = color; // set the pitchColour to the corresponding color
+            }
+            else
+            {
+                pitchColour = new Color(255, 255, 255, 255);
+                Debug.Log(pitch + " is not in the dictionary");
+                //    return;
+            }
+
             ShootBullet(pitch, pitchColour);
         } 
         else
