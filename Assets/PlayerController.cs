@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public string address_2;
     public string address_3;
     public bool isMusicDetected;
+    public GameManager _gameManager;
 
     // dictionary seems not working, setting D1 as none
     [SerializeField] private GameObject player;
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
+        _gameManager = FindObjectOfType<GameManager>();
+
         address_1 = "/player/position";
         address_2 = "/player/audio/status"; // true/false
         address_3 = "/player/audio/pitch"; // pitch code name e.g. C3
@@ -61,14 +65,13 @@ public class PlayerController : MonoBehaviour
         //    ShootBullet(pitchColour); // ShootBulletOfColour(Color pitchColour);
         //}
 
-
-
     }
 
     private void UpdatePlayerPosition(float targetPosition)
     {
         Vector3 inBoundPosition = new Vector3(targetPosition, 0, 0);
-        if (targetPosition < leftBound)
+
+        if (targetPosition < leftBound) // boundary detection
         {
             inBoundPosition.x = leftBound;
         }
@@ -79,7 +82,7 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, inBoundPosition, playerSpeed * Time.deltaTime);
     }
 
-
+    #region Fire bullets
     void ShootBullet(String pitch,Color m_colour)
     {
 
@@ -99,9 +102,9 @@ public class PlayerController : MonoBehaviour
         SpriteRenderer rend = newBullet.GetComponent<SpriteRenderer>();
         //print(m_colour);
         rend.color = m_colour;  //  change the color after it is instantiated
-        print(rend.color);
     }
-
+    #endregion
+    #region OSC message handler
     void PositionMessageReceived(OSCMessage message)
     {
         // check if the received message is of the right
@@ -130,38 +133,11 @@ public class PlayerController : MonoBehaviour
             {
                 isMusicDetected = true;
             }
+            ShootBullet("C1", new Color32(0,0,0,255));
         } 
         else if (message.ToString(out var pitch))
         {
             isMusicDetected = true;
-
-            //switch (pitch)
-            //{
-            //    case "A1":
-            //        pitchColour = new Color32(221, 96, 96, 255);
-            //        break;
-            //    case "B1":
-            //        pitchColour = new Color32(250, 155, 0, 255);
-            //        break;
-            //    case "C1":
-            //        pitchColour = new Color32(231, 211, 0, 255);
-            //        break;
-            //    case "D1":
-            //        pitchColour = new Color32(122, 184, 77, 255);
-            //        break;
-            //    case "E1":
-            //        pitchColour = new Color32(91, 216, 255, 255);
-            //        break;
-            //    case "F1":
-            //        pitchColour = new Color32(156, 119, 255, 255);
-            //        break;
-            //    case "G1":
-            //        pitchColour = new Color32(221, 24, 255, 255);
-            //        break;
-            //}
-
-            // create an expression to map the pitch to colour pallette 
-            // DOESN"T WORK - can only generate the first key
 
             if (pitchCodeBook.ContainsKey(pitch))
             // check if the upcoming pitch matches any dictionary key
@@ -183,5 +159,16 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Message Type error. Need integer or string");
         }
     }
+    #endregion
 
+    #region player collision
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.CompareTag("Enemy"))
+        {
+            // display end game UI
+            _gameManager.PlayerHit();
+        }
+    }
+    #endregion
 }
