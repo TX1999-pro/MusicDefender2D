@@ -76,7 +76,8 @@ public class Invader : MonoBehaviour
 
     private void OnDestroy()
     {
-        FindObjectOfType<GameManager>().EnemyKilled(this.gameObject);
+        
+        FindObjectOfType<GameManager>()?.EnemyKilled(this.gameObject);
     }
 
 

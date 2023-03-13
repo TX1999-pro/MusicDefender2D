@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static GameManager;
@@ -18,14 +22,18 @@ public class GameManager : MonoBehaviour
     public GameObject levelCompletedUI;
     public PlayerController playerController;
 
+    public TextMeshProUGUI invaderCountDisplay;
+    public TextMeshProUGUI ScoreDisplay;
+    private int score =0;
     private int invaderLeft;
-    [SerializeField]private List<GameObject> enemies;
-
     
+    [SerializeField]private List<GameObject> enemies;
+       
     public delegate void AllEnemiesKilled(); // template
     public static event AllEnemiesKilled OnAllEnemiesKilled; // instance
+    [SerializeField] private float destroyEnemybelowHeight = 9.4f;
     //public GameObject[] enemyPrefabs;
-    
+
 
     private void OnEnable()
     {
@@ -53,21 +61,76 @@ public class GameManager : MonoBehaviour
         gameEndWhenLand.SetActive(false);
         levelCompletedUI.SetActive(false);
 
+
+        score = 0;
         // count the number of enemy in the scene
         enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         invaderLeft = enemies.Count;
-        Debug.Log("No. of Enemy Spawn: " + invaderLeft);
+        Debug.Log("Total No. of Enemy Left: " + invaderLeft);
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.D))
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Debug.Log("Hey cheating!");
+                // D and A are pressed in sequence
+                DestoryAllEnemyOnScreen();
+            }
+        }
 
-    #region testing with enemy kill count
+        UpdateInvaderCounter();
+        UpdatePlayerScore();
+    }
+
+    #region cheat
+    private void DestoryAllEnemyOnScreen()
+    {
+        // loop through the enemy list
+        // determine if each enemy in the list is visible
+        // remove the enemy that is visible
+        int count = 0;
+        // create a copy first
+        //List<GameObject> copylist = enemies.ToList();
+
+        foreach (GameObject enemy in enemies.ToList())
+        {
+            if (enemy.transform.position.y <= destroyEnemybelowHeight) // check screen position
+            // not the best way but it (might) work
+            {
+                Destroy(enemy);
+                count++;
+            }
+        }
+
+        Debug.Log("Destroying " + count + " enemies visible from the screen.");
+    }
+    #endregion
+
+    #region Update In-game UI display
+    private void UpdateInvaderCounter()
+    {
+        invaderCountDisplay.text = invaderLeft.ToString();
+    }
+
+    private void UpdatePlayerScore()
+    {
+        ScoreDisplay.text = score.ToString();
+    }
+
+    #endregion
+
+    #region enemy kill count
     public void EnemyKilled(GameObject enemy)
     {
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
             invaderLeft = enemies.Count;
-            Debug.Log("No. of Enemy Spawn: " + invaderLeft);
+            playerScore();
+            Debug.Log("No. of Enemy Left: " + invaderLeft);
             if (invaderLeft == 0 && OnAllEnemiesKilled != null)
             {
                 Debug.Log("All enemy killed!");
@@ -77,11 +140,20 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region Score System -> maybe in a new script
+    private void playerScore()
+    {
+        score++;
+    }
+    #endregion
+
+    #region Game End UI
     public void LevelComplete()
     {
         gameHasEnded = true;
         Debug.Log("Cool. All Cleared.");
-        levelCompletedUI.SetActive(true);
+        levelCompletedUI.gameObject.SetActive(true);
         playerController.enabled = false;
     }
 
@@ -104,11 +176,12 @@ public class GameManager : MonoBehaviour
         playerController.gameObject.SetActive(false);
         playerController.enabled = false;
     }
-
     public void RestartGame()
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    #endregion
+
 
 }
