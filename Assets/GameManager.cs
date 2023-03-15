@@ -16,15 +16,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource sfx;
     
     private bool gameHasEnded = false;
-    
+    public PlayerController playerController;
+    public ScoreSystem m_ScoreSystem;
+
+    //UI
     public GameObject gameEndWhenHit;
     public GameObject gameEndWhenLand;
     public GameObject levelCompletedUI;
-    public PlayerController playerController;
-
+    
     public TextMeshProUGUI invaderCountDisplay;
     public TextMeshProUGUI ScoreDisplay;
-    private int score =0;
     private int invaderLeft;
     
     [SerializeField]private List<GameObject> enemies;
@@ -61,11 +62,10 @@ public class GameManager : MonoBehaviour
         gameEndWhenLand.SetActive(false);
         levelCompletedUI.SetActive(false);
 
-
-        score = 0;
         // count the number of enemy in the scene
         enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         invaderLeft = enemies.Count;
+        UpdateInvaderCounter();
         Debug.Log("Total No. of Enemy Left: " + invaderLeft);
     }
 
@@ -80,9 +80,6 @@ public class GameManager : MonoBehaviour
                 DestoryAllEnemyOnScreen();
             }
         }
-
-        UpdateInvaderCounter();
-        UpdatePlayerScore();
     }
 
     #region cheat
@@ -115,11 +112,6 @@ public class GameManager : MonoBehaviour
         invaderCountDisplay.text = invaderLeft.ToString();
     }
 
-    private void UpdatePlayerScore()
-    {
-        ScoreDisplay.text = score.ToString();
-    }
-
     #endregion
 
     #region enemy kill count
@@ -129,8 +121,13 @@ public class GameManager : MonoBehaviour
         {
             enemies.Remove(enemy);
             invaderLeft = enemies.Count;
-            playerScore();
+
+            m_ScoreSystem.playerScore(100f);
+            UpdateInvaderCounter();
+            m_ScoreSystem.UpdatePlayerScore();
+
             Debug.Log("No. of Enemy Left: " + invaderLeft);
+
             if (invaderLeft == 0 && OnAllEnemiesKilled != null)
             {
                 Debug.Log("All enemy killed!");
@@ -138,13 +135,6 @@ public class GameManager : MonoBehaviour
             }
 
         }
-    }
-    #endregion
-
-    #region Score System -> maybe in a new script
-    private void playerScore()
-    {
-        score++;
     }
     #endregion
 

@@ -60,7 +60,7 @@ public class Invader : MonoBehaviour
         else
         {
             Bullet bulletInCollision = other.gameObject.GetComponent<Bullet>(); 
-            Debug.Log("Enemy collided with " + bulletInCollision.PitchCode);
+            Debug.Log("Enemy " + m_pitch + " collided with" + bulletInCollision.PitchCode);
 
             if (bulletInCollision.PitchCode == m_pitch)
             // if code matches
@@ -68,7 +68,7 @@ public class Invader : MonoBehaviour
                 DestroySelf();
             }
 
-            // play mismatch animation
+            // if not match, play mismatch animation
             // misMatch();
         }
 

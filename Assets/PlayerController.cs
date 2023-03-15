@@ -59,17 +59,13 @@ public class PlayerController : MonoBehaviour
         UpdatePlayerPosition(targetPosition);
 
         // use a timer to control the wait time between shots
-        shootTimer += Time.deltaTime;         
-        //if (isMusicDetected)
-        //{
-        //    ShootBullet(pitchColour); // ShootBulletOfColour(Color pitchColour);
-        //}
+        shootTimer += Time.deltaTime;
 
     }
 
     private void UpdatePlayerPosition(float targetPosition)
     {
-        Vector3 inBoundPosition = new Vector3(targetPosition, 0, 0);
+        Vector3 inBoundPosition = new Vector3(targetPosition, 0.76f, 0);
 
         if (targetPosition < leftBound) // boundary detection
         {
@@ -83,24 +79,23 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Fire bullets
-    void ShootBullet(String pitch,Color m_colour)
+    void ShootBullet(String pitch_code,Color m_colour)
     {
 
         if (shootTimer > coolDownTime)
         {
             shootTimer = 0f;
             // InstantiateBullet()
-            GenerateBulletOfColour(pitch, m_colour);
+            GenerateBulletOfColour(pitch_code, m_colour);
             GameManager._instance.PlaySfx(shooting);
         }
     }
 
-    void GenerateBulletOfColour(String pitch, Color m_colour)
+    void GenerateBulletOfColour(String pitch_code, Color m_colour)
     {
         Bullet newBullet = Instantiate(bulletPrefab, speaker.position, Quaternion.identity);
-        newBullet.PitchCode = pitch;
+        newBullet.PitchCode = pitch_code;
         SpriteRenderer rend = newBullet.GetComponent<SpriteRenderer>();
-        //print(m_colour);
         rend.color = m_colour;  //  change the color after it is instantiated
     }
     #endregion
@@ -124,16 +119,18 @@ public class PlayerController : MonoBehaviour
     void MusicMessageReceived(OSCMessage message)
     {
         // control whether the sound is received (as if shoot button was pressed)
-        // Toggle shooting on and off
+        
         if (message.ToInt(out var bo))
         {
-            //Debug.Log(bo);
+            // Toggle shooting on and off
             if (bo == 0) isMusicDetected = false;
             if (bo == 1)
             {
                 isMusicDetected = true;
             }
-            ShootBullet("C1", new Color32(0,0,0,255));
+            /////###############################//////
+            ShootBullet("NA", new Color32(0,0,0,255));
+            /////###############################//////
         } 
         else if (message.ToString(out var pitch))
         {
@@ -144,15 +141,14 @@ public class PlayerController : MonoBehaviour
             {
                 Color color = pitchCodeBook[pitch];
                 pitchColour = color; // set the pitchColour to the corresponding color
+                ShootBullet(pitch, pitchColour);
             }
             else
             {
-                pitchColour = new Color(255, 255, 255, 255);
                 Debug.Log(pitch + " is not in the dictionary");
                 //    return;
             }
 
-            ShootBullet(pitch, pitchColour);
         } 
         else
         {
