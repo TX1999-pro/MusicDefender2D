@@ -42,19 +42,18 @@ public class PlayerController : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
 
         address_1 = "/player/position";
-        address_2 = "/player/audio/status"; // true/false
+        address_2 = "/player/audio/instruction"; // true/false
         address_3 = "/player/audio/pitch"; // pitch code name e.g. C3
         // get the receiver
         receiver = GetComponent<OSCReceiver>();
         receiver.Bind(address_1, PositionMessageReceived);
-        receiver.Bind(address_2, MusicMessageReceived);
+        receiver.Bind(address_2, InstructionMessageReceived);
         receiver.Bind(address_3, MusicMessageReceived);
         pitchCodeBook = FindObjectOfType<PitchCode>().CodeBook;
 
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdatePlayerPosition(targetPosition);
@@ -64,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    #region player control
     private void UpdatePlayerPosition(float targetPosition)
     {
         Vector3 inBoundPosition = new Vector3(targetPosition, 0, 0);
@@ -78,6 +78,40 @@ public class PlayerController : MonoBehaviour
         }
         transform.position = Vector2.MoveTowards(transform.position, inBoundPosition, playerSpeed * Time.deltaTime);
     }
+
+    public void SwitchAppearanceByName(string currentChildName, string newChildName)
+    {
+        Transform currentChild = transform.Find(currentChildName);
+        Transform newChild = transform.Find(newChildName);
+
+        if (currentChild == null || newChild == null)
+        {
+            // Check if the given name is valid
+            Debug.LogError("Child with the given name not found.");
+            return;
+        }
+
+        currentChild.gameObject.SetActive(false);
+        newChild.gameObject.SetActive(true);
+    }
+
+    public void SwitchAppearanceByIndex(int currentChildIndex, int newChildIndex)
+    {
+        // Check if the given indexes are valid
+        if (currentChildIndex >= transform.childCount || newChildIndex >= transform.childCount)
+        {
+            Debug.LogError("Invalid child index provided.");
+            return;
+        }
+
+        // Set the current child inactive
+        transform.GetChild(currentChildIndex).gameObject.SetActive(false);
+
+        // Set the new child active
+        transform.GetChild(newChildIndex).gameObject.SetActive(true);
+    }
+
+    #endregion
 
     #region Fire bullets
     void ShootBullet(String pitch_code,Color m_colour)
@@ -116,8 +150,8 @@ public class PlayerController : MonoBehaviour
     void PositionMessageReceived(OSCMessage message)
     {
         // check if the received message is of the right
-        Debug.Log("message received from " + address_1);
-        Debug.Log(message);
+        //Debug.Log("message received from " + address_1);
+        //Debug.Log(message);
 
         if (message.ToFloat(out var value))
         {
@@ -129,23 +163,52 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void InstructionMessageReceived(OSCMessage message)
+    {
+        // check if the received message is of the right
+
+        if (message.ToString(out var instruction))
+        {
+            if (instruction == "OK" )
+            {
+                // restart the game
+            }
+            if (instruction == "transform")
+            {
+                // update the player sprite,transform to lizard
+                SwitchAppearanceByIndex(1, 2);
+
+            }
+            if (instruction == "back")
+            {
+                // update the player sprite, transform to human
+                SwitchAppearanceByIndex(2, 1);
+            }
+
+        }
+        else
+        {
+            Debug.Log("Message type error. String required.");
+        }
+    }
+
     void MusicMessageReceived(OSCMessage message)
     {
-        // control whether the sound is received (as if shoot button was pressed)
+        // control whether the sound is received (as if shoot button was pressed), used for debugging
         
-        if (message.ToInt(out var bo))
-        {
-            // Toggle shooting on and off
-            if (bo == 0) isMusicDetected = false;
-            if (bo == 1)
-            {
-                isMusicDetected = true;
-            }
-            /////###############################//////
-            ShootBullet("NA", new Color32(0,0,0,255));
-            /////###############################//////
-        } 
-        else if (message.ToString(out var pitch))
+        //if (message.ToInt(out var bo))
+        //{
+        //    // Toggle shooting on and off
+        //    if (bo == 0) isMusicDetected = false;
+        //    if (bo == 1)
+        //    {
+        //        isMusicDetected = true;
+        //    }
+        //    /////###############################//////
+        //    ShootBullet("NA", new Color32(0,0,0,255));
+        //    /////###############################//////
+        //} 
+        if (message.ToString(out var pitch))
         {
             isMusicDetected = true;
 
@@ -159,9 +222,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Debug.Log(pitch + " is not in the dictionary");
-                //    return;
             }
-
         } 
         else
         {

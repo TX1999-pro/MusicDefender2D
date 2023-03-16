@@ -50,7 +50,7 @@ public class Invader : MonoBehaviour
 
     private void Update()
     {
-        // every 2 second drop
+        // every x seconds drop, controlled by fallSpeed
         DropCounter += Time.deltaTime;
         if (DropCounter > dropInterval)
         {
@@ -70,6 +70,7 @@ public class Invader : MonoBehaviour
         else
         {
             Bullet bulletInCollision = other.gameObject.GetComponent<Bullet>(); 
+
             Debug.Log("Enemy " + m_pitch + " collided with" + bulletInCollision.PitchCode);
 
             if (bulletInCollision.PitchCode == m_pitch)
@@ -86,7 +87,6 @@ public class Invader : MonoBehaviour
 
     private void OnDestroy()
     {
-        
         FindObjectOfType<GameManager>()?.EnemyKilled(this.gameObject);
     }
 

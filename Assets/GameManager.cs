@@ -6,7 +6,6 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static GameManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,12 +13,19 @@ public class GameManager : MonoBehaviour
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
     [SerializeField] private AudioSource sfx;
-    
-    private bool gameHasEnded = false;
+   
     public PlayerController playerController;
     public ScoreSystem m_ScoreSystem;
+    public Transform bonusRegion;
+    private float bonusRegionTop;
+    private float bonusRegionBottom;
+    private float regionHeight;
 
-    //UI
+    public bool isGameOver = false;
+    public delegate void GameEndEvent();
+    public static event GameEndEvent OnGameEnd;
+
+    #region UI
     public GameObject gameEndWhenHit;
     public GameObject gameEndWhenLand;
     public GameObject levelCompletedUI;
@@ -27,14 +33,16 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI invaderCountDisplay;
     public TextMeshProUGUI ScoreDisplay;
     private int invaderLeft;
-    
-    [SerializeField]private List<GameObject> enemies;
-       
+    #endregion
+
+    #region enemy
+    [SerializeField]private List<GameObject> enemies;  
+
     public delegate void AllEnemiesKilled(); // template
     public static event AllEnemiesKilled OnAllEnemiesKilled; // instance
     [SerializeField] private float destroyEnemybelowHeight = 9.4f;
     //public GameObject[] enemyPrefabs;
-
+    #endregion
 
     private void OnEnable()
     {
@@ -58,9 +66,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         #endregion
+        // turn off UI
         gameEndWhenHit.SetActive(false);
         gameEndWhenLand.SetActive(false);
         levelCompletedUI.SetActive(false);
+
+        regionHeight = 2f;
+        bonusRegionTop = bonusRegion.position.y + regionHeight / 2;
+        bonusRegionBottom = bonusRegion.position.y - regionHeight / 2;
 
         // count the number of enemy in the scene
         enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
@@ -106,7 +119,15 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Update In-game UI display
+    #region Game End
+
+    public void EndGame()
+    {
+        isGameOver = true;
+        OnGameEnd?.Invoke();
+    }
+
+    //Update In-game UI display
     private void UpdateInvaderCounter()
     {
         invaderCountDisplay.text = invaderLeft.ToString();
@@ -115,13 +136,20 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region enemy kill count
+    // maybe have an enemy controller as a separate class to define enemy features
     public void EnemyKilled(GameObject enemy)
     {
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
             invaderLeft = enemies.Count;
-            float point = 100 + (12f - enemy.transform.position.y) * 10;
+            float enemyTransformY = enemy.transform.position.y;
+            float point = 100 + (12f - enemyTransformY) * 10;
+
+            if (EnemyInBonusRegion(enemyTransformY))
+            {
+                point *= 2;
+            }
             m_ScoreSystem.AddScore(point);
             UpdateInvaderCounter();
             m_ScoreSystem.UpdatePlayerScore();
@@ -136,12 +164,19 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    private bool EnemyInBonusRegion(float enemyPosition)
+    {
+        Debug.Log("Hit enemy in bonus region.");
+        return enemyPosition >= bonusRegionBottom && enemyPosition <= bonusRegionTop;
+
+    }
     #endregion
 
     #region Game End UI
     public void LevelComplete()
     {
-        gameHasEnded = true;
+        EndGame();
         Debug.Log("Cool. All Cleared.");
         levelCompletedUI.gameObject.SetActive(true);
         playerController.enabled = false;
@@ -149,8 +184,8 @@ public class GameManager : MonoBehaviour
 
     public void PlayerHit()
     {
-        gameHasEnded = true;
-        Time.timeScale = 0;
+        EndGame();
+        Time.timeScale = 0; // freeze the game
         Debug.Log("Player Hit! Try again?");
         gameEndWhenHit.SetActive(true);
         playerController.gameObject.SetActive(false);
@@ -159,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void EnemyLanded()
     {
-        gameHasEnded = true;
+        isGameOver = true;
         Time.timeScale = 0;
         Debug.Log("Enemy Landed! Try again?");
         gameEndWhenLand.SetActive(true);
