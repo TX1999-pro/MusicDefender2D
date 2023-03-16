@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6633362727253913888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6633362727253913890}
+  - component: {fileID: 6633362727253913889}
+  m_Layer: 0
+  m_Name: BulletManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6633362727253913890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6633362727253913888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.2470903, y: 3.8360868, z: -0.025334693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6633362727253913889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6633362727253913888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9daa0fbc83f06674e98dce09c5f6b2c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefabs:
+  - MIDI_id: 45
+    prefab: {fileID: 6741420765367676282, guid: 339df3c3ca95469428c59505fc31fbb4, type: 3}
+  - MIDI_id: 46
+    prefab: {fileID: 2460374142704536185, guid: d8ce4333b76e0ed459e94c3102a111ab, type: 3}
+  - MIDI_id: 47
+    prefab: {fileID: 1130473964944104673, guid: 0af7b2783e632fa4fba4a127afea2411, type: 3}
+  - MIDI_id: 36
+    prefab: {fileID: 2638071876479760446, guid: 61b87c4afb20be047b074f9be42bf737, type: 3}
+  - MIDI_id: 37
+    prefab: {fileID: 1027122279659897244, guid: fa86fd4aab52e734281dab339723253a, type: 3}
+  - MIDI_id: 38
+    prefab: {fileID: 2419324407752992247, guid: d5815b81b3a05e046bfc30b0fd64adf9, type: 3}
+  - MIDI_id: 39
+    prefab: {fileID: 3892220987423120086, guid: 5dc01f443e3658f4ca4138222b8d67bd, type: 3}
+  - MIDI_id: 40
+    prefab: {fileID: 9020355433829219683, guid: 861c79d307e99494a88d52b02f8b8c43, type: 3}
+  - MIDI_id: 41
+    prefab: {fileID: 7596485968019618835, guid: 70091633a5946df45945cf2bb9348e31, type: 3}
+  - MIDI_id: 42
+    prefab: {fileID: 502744415068652316, guid: 7464f36b5ef78e6468b562fecda8428c, type: 3}
+  - MIDI_id: 43
+    prefab: {fileID: 7951988548700191282, guid: b470b96b3c83e0b408e8d1febe32e95d, type: 3}
+  - MIDI_id: 44
+    prefab: {fileID: 7954322629917395816, guid: 1a1d65f60f2892d4597bdb3710716ba2, type: 3}

@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
         {
             enemies.Remove(enemy);
             invaderLeft = enemies.Count;
-
-            m_ScoreSystem.playerScore(100f);
+            float point = 100 + (12f - enemy.transform.position.y) * 10;
+            m_ScoreSystem.AddScore(point);
             UpdateInvaderCounter();
             m_ScoreSystem.UpdatePlayerScore();
 
