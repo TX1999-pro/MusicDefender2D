@@ -146,6 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f5f0ff58e63d44cbee8b6c5fa83422, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PitchCode: 44
+  PitchCode: 56
   speed: 10
   lifeTime: 3

@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
-    public float fallSpeed;
-    public float dropInterval; // how long should the counter achieve to start dropping
+
     [SerializeField] private PitchCode _pitchCodeBook;
     [SerializeField] private string m_pitch; // A1, B1, C1, D1, etc.
     [SerializeField] private Color m_pitchColor;
     private float DropCounter;
+    private float fallSpeed;
+    private float dropInterval; // how long should the counter achieve to start dropping
 
     private void OnEnable()
     {
-        _pitchCodeBook = FindObjectOfType<PitchCode>();
-        SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
+        //_pitchCodeBook = FindObjectOfType<PitchCode>();
+        //SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
 
-        if (_pitchCodeBook.CodeBook.ContainsKey(m_pitch))
-        // check if the upcoming pitch matches any dictionary key
-        {
-            m_pitchColor = _pitchCodeBook.CodeBook[m_pitch];
-            rend.color = m_pitchColor; // set the enemy renderer to the corresponding color
-        }
-        else
-        {
-            Debug.LogWarning("Enemy pitch not assigned");
-            m_pitch = "unknown";
-            rend.color = new Color32(0, 0, 0, 255); // else set the invader block as black
-        }
-
-        // invaderLeft +=1;
+        //if (_pitchCodeBook.CodeBook.ContainsKey(m_pitch))
+        //// check if the upcoming pitch matches any dictionary key
+        //{
+        //    m_pitchColor = _pitchCodeBook.CodeBook[m_pitch];
+        //    rend.color = m_pitchColor; // set the enemy renderer to the corresponding color
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("Enemy pitch not assigned");
+        //    m_pitch = "unknown";
+        //    rend.color = new Color32(0, 0, 0, 255); // else set the invader block as black
+        //}
     }
     internal void DestroySelf()
     {
@@ -46,7 +45,9 @@ public class Invader : MonoBehaviour
         {
             child.localPosition= Vector3.zero;
         }
-    }
+        fallSpeed = 0.5f;
+        dropInterval = 1; // every 1 second, fall
+}
 
     private void Update()
     {
