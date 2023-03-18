@@ -1,9 +1,11 @@
+using Platformer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
    
     public PlayerController playerController;
     public ScoreSystem m_ScoreSystem;
+    public CoinSpawner _coinSpawner;
     public Transform bonusRegion;
     private float bonusRegionTop;
     private float bonusRegionBottom;
@@ -75,11 +78,8 @@ public class GameManager : MonoBehaviour
         bonusRegionTop = bonusRegion.position.y + regionHeight / 2;
         bonusRegionBottom = bonusRegion.position.y - regionHeight / 2;
 
-        // count the number of enemy in the scene
-        enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-        invaderLeft = enemies.Count;
-        UpdateInvaderCounter();
-        Debug.Log("Total No. of Enemy Left: " + invaderLeft);
+        _coinSpawner = GetComponent<CoinSpawner>();
+
     }
 
     private void Update()
@@ -121,6 +121,20 @@ public class GameManager : MonoBehaviour
 
     #region Game End
 
+    public void StartSelectedLevel()
+    {
+        Debug.Log("Loading new level...");
+        EnemyCount();
+        StartCoroutine(_coinSpawner.SpawnCoins());
+    }
+    private void EnemyCount()
+    {
+        // count the number of enemy in the scene
+        enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        invaderLeft = enemies.Count;
+        UpdateInvaderCounter();
+        Debug.Log("Total No. of Enemy Left: " + invaderLeft);
+    }
     public void EndGame()
     {
         isGameOver = true;
@@ -179,7 +193,6 @@ public class GameManager : MonoBehaviour
         EndGame();
         Debug.Log("Cool. All Cleared.");
         levelCompletedUI.gameObject.SetActive(true);
-        playerController.enabled = false;
     }
 
     public void PlayerHit()
@@ -188,8 +201,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0; // freeze the game
         Debug.Log("Player Hit! Try again?");
         gameEndWhenHit.SetActive(true);
-        playerController.gameObject.SetActive(false);
-        playerController.enabled = false;
+
     }
 
     public void EnemyLanded()
@@ -198,13 +210,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Debug.Log("Enemy Landed! Try again?");
         gameEndWhenLand.SetActive(true);
-        playerController.gameObject.SetActive(false);
-        playerController.enabled = false;
     }
     public void RestartGame()
     {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Continue()
+    {
+        // load next scene in the build index
+
     }
     #endregion
 

@@ -7,6 +7,7 @@ TagManager:
   - Hero
   - Enemy
   - Bounds
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - Hero
   - Enemy
-  - 
+  - Button
   - 
   - 
   - 

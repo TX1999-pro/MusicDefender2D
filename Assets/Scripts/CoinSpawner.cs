@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Platformer;
 
 public class CoinSpawner : MonoBehaviour
 {
@@ -33,15 +34,14 @@ public class CoinSpawner : MonoBehaviour
     {
         groundWidth = ground.GetComponent<SpriteRenderer>().bounds.size.x;
         playerTransform = FindObjectOfType<PlayerController>().GetComponent<Transform>();
+        _gameManager = FindObjectOfType<GameManager>();
         spawnedCoins = new List<GameObject>();
-
-        StartCoroutine(SpawnCoins());
 
     }
 
-    private IEnumerator SpawnCoins()
+    public IEnumerator SpawnCoins()
     {
-        while (!GameManager._instance.isGameOver)
+        while (!_gameManager.isGameOver)
         {
             float randomX;
             float playerX = playerTransform.position.x;

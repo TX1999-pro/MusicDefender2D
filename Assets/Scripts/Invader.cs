@@ -45,8 +45,8 @@ public class Invader : MonoBehaviour
         {
             child.localPosition= Vector3.zero;
         }
-        fallSpeed = 0.5f;
-        dropInterval = 1f; // every 1 second, fall
+        fallSpeed = 0.25f;
+        dropInterval = 2f; // every 2 second, fall
 }
 
     private void Update()

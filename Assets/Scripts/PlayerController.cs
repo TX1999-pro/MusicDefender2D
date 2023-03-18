@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float targetPosition;
     public float leftBound;
     public float rightBound;
@@ -35,11 +36,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Dictionary<string, Color32> pitchCodeBook;
 
+    private RaycastSelectButton buttonSelector;
 
     void Start()
     {
 
         _gameManager = FindObjectOfType<GameManager>();
+        buttonSelector = FindObjectOfType<RaycastSelectButton>();
 
         address_1 = "/player/position";
         address_2 = "/player/audio/instruction"; // true/false
@@ -169,9 +172,10 @@ public class PlayerController : MonoBehaviour
 
         if (message.ToString(out var instruction))
         {
-            if (instruction == "OK" )
+            if (instruction == "click" )
             {
-                // restart the game
+                // invoke the button.onClick of the select button
+                TriggerSelectedButton();
             }
             if (instruction == "transform")
             {
@@ -248,5 +252,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region instruction handler
+    private void TriggerSelectedButton()
+    {
+        // Ensure the selected button is not null
+        if (buttonSelector.currentSelectedButton != null)
+        {
+            buttonSelector.currentSelectedButton.onClick.Invoke();
+        }
+    }
     #endregion
 }
