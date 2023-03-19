@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         buttonSelector = FindObjectOfType<RaycastSelectButton>();
 
+        #region Initialise OSC
         address_1 = "/player/position";
         address_2 = "/player/audio/instruction"; // true/false
         address_3 = "/player/audio/pitch"; // pitch code name e.g. C3
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
         receiver.Bind(address_2, InstructionMessageReceived);
         receiver.Bind(address_3, MusicMessageReceived);
         pitchCodeBook = FindObjectOfType<PitchCode>().CodeBook;
-
+        #endregion
 
     }
 

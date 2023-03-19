@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
-
+    [SerializeField] private float fallSpeed;
     [SerializeField] private PitchCode _pitchCodeBook;
     [SerializeField] private string m_pitch; // A1, B1, C1, D1, etc.
     [SerializeField] private Color m_pitchColor;
     private float DropCounter;
-    private float fallSpeed;
     private float dropInterval; // how long should the counter achieve to start dropping
 
     private void OnEnable()
     {
+        // populate active enemy in the scene with defined color => not used anymore
+
         //_pitchCodeBook = FindObjectOfType<PitchCode>();
         //SpriteRenderer rend = this.GetComponent<SpriteRenderer>();
-
         //if (_pitchCodeBook.CodeBook.ContainsKey(m_pitch))
         //// check if the upcoming pitch matches any dictionary key
         //{
@@ -29,6 +29,14 @@ public class Invader : MonoBehaviour
         //    m_pitch = "unknown";
         //    rend.color = new Color32(0, 0, 0, 255); // else set the invader block as black
         //}
+        // set it's child position to be Vector3.zero to it's parent
+        // use transform.localPosition
+        foreach (Transform child in this.transform)
+        {
+            child.localPosition = Vector3.zero;
+        }
+        fallSpeed = FindObjectOfType<GameManager>().dropSpeed;
+        dropInterval = 1f; // every 1 second, fall
     }
     internal void DestroySelf()
     {
@@ -36,18 +44,6 @@ public class Invader : MonoBehaviour
         Destroy(gameObject);
 
     }
-
-    private void Start()
-    {
-        // set it's child position to be Vector3.zero to it's parent
-        // use transform.localPosition
-        foreach (Transform child in this.transform)
-        {
-            child.localPosition= Vector3.zero;
-        }
-        fallSpeed = 0.25f;
-        dropInterval = 2f; // every 2 second, fall
-}
 
     private void Update()
     {
@@ -63,12 +59,7 @@ public class Invader : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (!other.collider.GetComponent<Bullet>())
-        // if not hit by bullets do nothing
-        {
-            return;
-        }
-        else
+        if (other.collider.GetComponent<Bullet>())
         {
             Bullet bulletInCollision = other.gameObject.GetComponent<Bullet>(); 
 
@@ -80,8 +71,14 @@ public class Invader : MonoBehaviour
                 DestroySelf();
             }
 
-            // if not match, play mismatch animation
+            // then, if not match, play mismatch animation
             // misMatch();
+        }
+        if (other.collider.CompareTag("Bonus"))
+        {
+            // if the invader enter the bonus region
+            // invoke OSC transmitter message
+
         }
 
     }
@@ -90,7 +87,5 @@ public class Invader : MonoBehaviour
     {
         FindObjectOfType<GameManager>()?.EnemyKilled(this.gameObject);
     }
-
-
 
 }

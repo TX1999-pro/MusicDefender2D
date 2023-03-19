@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScoreSystem : MonoBehaviour
 {
-    private float score;
+    public float score;
     public bool onBonus;
     public TextMeshProUGUI ScoreDisplay;
     // Start is called before the first frame update

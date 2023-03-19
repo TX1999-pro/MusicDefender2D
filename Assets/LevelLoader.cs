@@ -1,4 +1,5 @@
 using Platformer;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,24 +33,52 @@ public class LevelLoader : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
     }
 
+
     private void OnLevel1ButtonClick()
     {
-        menuCanvas.SetActive(false);
-        level1_Object.SetActive(true);
-        _gameManager.StartSelectedLevel();
+
+        StartCoroutine(Countdown(level1_Object));
     }
 
     private void OnLevel2ButtonClick()
     {
-        menuCanvas.SetActive(false);
-        level2_Object.SetActive(true);
-        _gameManager.StartSelectedLevel();
+        StartCoroutine(Countdown(level2_Object));
     }
 
     private void OnLevel3ButtonClick()
     {
+        StartCoroutine(Countdown(level3_Object));
+    }
+
+    private IEnumerator Countdown(GameObject levelObject)
+    {
+        // 3-2-1-GO!
         menuCanvas.SetActive(false);
-        level3_Object.SetActive(true);
+        _gameManager.backgroundAudio.Stop();
+        // set the gameObject to be true
+        _gameManager.countdownText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        // Display "3"
+        _gameManager.countdownText.text = "3";
+        yield return new WaitForSeconds(1.0f);
+
+        // Display "2"
+        _gameManager.countdownText.text = "2";
+        yield return new WaitForSeconds(1.0f);
+
+        // Display "1"
+        _gameManager.countdownText.text = "1";
+        yield return new WaitForSeconds(1.0f);
+
+        // Display "Go!"
+        _gameManager.countdownText.text = "Go!";
+        yield return new WaitForSeconds(1.0f);
+
+        // Hide the countdown text
+        _gameManager.countdownText.gameObject.SetActive(false);
+
+        // Enable the desired behavior for your game objects (e.g., dropping down)
+        levelObject.SetActive(true);
         _gameManager.StartSelectedLevel();
     }
 }

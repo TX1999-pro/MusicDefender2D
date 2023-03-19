@@ -8,6 +8,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,15 @@ public class GameManager : MonoBehaviour
     public ScoreSystem m_ScoreSystem;
     public CoinSpawner _coinSpawner;
     public Transform bonusRegion;
+
+    public TextMeshProUGUI countdownText;
+    public Scrollbar dropSpeedSlider;
+    public Text dropSpeedText;
+    public float dropSpeed;
+    public Toggle musicToggle;
+    public AudioSource backgroundAudio;
+
+
     private float bonusRegionTop;
     private float bonusRegionBottom;
     private float regionHeight;
@@ -50,11 +60,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         OnAllEnemiesKilled += LevelComplete;
+        dropSpeedSlider = FindObjectOfType<Scrollbar>();
+        dropSpeedSlider.onValueChanged.AddListener(UpdateMusicSpeed);
     }
 
     private void OnDisable()
     {
         OnAllEnemiesKilled -= LevelComplete;
+        dropSpeedSlider.onValueChanged.RemoveListener(UpdateMusicSpeed);
     }
 
     private void Start()
@@ -69,16 +82,23 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         #endregion
-        // turn off UI
+
+        #region initialise UI canvas
         gameEndWhenHit.SetActive(false);
         gameEndWhenLand.SetActive(false);
         levelCompletedUI.SetActive(false);
+        countdownText.gameObject.SetActive(false);
+        #endregion
 
+        UpdateEnemySpeed();
         regionHeight = 2f;
         bonusRegionTop = bonusRegion.position.y + regionHeight / 2;
         bonusRegionBottom = bonusRegion.position.y - regionHeight / 2;
 
         _coinSpawner = GetComponent<CoinSpawner>();
+        musicToggle.onValueChanged.AddListener(ToggleMusic);
+        backgroundAudio = GetComponent<AudioSource>();
+        ToggleMusic(false);
 
     }
 
@@ -95,7 +115,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #region cheat
+    #region cheat and speed
+    public void UpdateEnemySpeed()
+    {
+        dropSpeed = dropSpeedSlider.value * 0.5f + 0.5f; 
+        // 0.5 is a trial and verified value
+        // range = (0.5, 1)
+        dropSpeedText.text = "x"+(dropSpeed*2).ToString("F2");
+    }
+
+    public void UpdateMusicSpeed(float sliderValue)
+    {
+        // Set the pitch of the background music to the slider value
+        backgroundAudio.pitch = sliderValue*0.25f+1f;
+    }
+
     private void DestoryAllEnemyOnScreen()
     {
         // loop through the enemy list
@@ -158,11 +192,11 @@ public class GameManager : MonoBehaviour
             enemies.Remove(enemy);
             invaderLeft = enemies.Count;
             float enemyTransformY = enemy.transform.position.y;
-            float point = 100 + (12f - enemyTransformY) * 10;
+            float point = Mathf.Max(0, 100 + (12f - enemyTransformY) * 10); // prevent negative number
 
             if (EnemyInBonusRegion(enemyTransformY))
             {
-                point *= 2;
+                point *= 2;                
             }
             m_ScoreSystem.AddScore(point);
             UpdateInvaderCounter();
@@ -188,11 +222,25 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game End UI
+    public void ToggleMusic(bool isOn)
+    {
+        if (isOn)
+        {
+            AudioListener.volume= 1.0f;
+            backgroundAudio.Play();
+        }
+        else
+        {
+            AudioListener.volume = 0f;
+            backgroundAudio.Stop();
+        }
+    }
     public void LevelComplete()
     {
         EndGame();
         Debug.Log("Cool. All Cleared.");
         levelCompletedUI.gameObject.SetActive(true);
+        levelCompletedUI.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Final Score: " + ScoreSystem.instance.score;
     }
 
     public void PlayerHit()

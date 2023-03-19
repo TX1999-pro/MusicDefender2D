@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bounds
   - Coin
+  - Bonus
   layers:
   - Default
   - TransparentFX
