@@ -1,11 +1,7 @@
-using Platformer;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -115,10 +111,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SendOutMidi(string note)
+    {
+        // Your logic to update the string value
+        Debug.Log("MIDI note out: " + note);
+    }
+
     #region cheat and speed
     public void UpdateEnemySpeed()
     {
-        dropSpeed = dropSpeedSlider.value * 0.5f + 0.5f; 
+        dropSpeed = dropSpeedSlider.value * 0.5f + 0.5f; // set dropSpeed
         // 0.5 is a trial and verified value
         // range = (0.5, 1)
         dropSpeedText.text = "x"+(dropSpeed*2).ToString("F2");
@@ -172,6 +174,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         isGameOver = true;
+        playerController.transform.position= new Vector3(0,0,0);
         OnGameEnd?.Invoke();
     }
 

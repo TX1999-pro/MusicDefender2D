@@ -346,7 +346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 039f15be55d25a34abb6fd09900259e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35.5
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 039f15be55d25a34abb6fd09900259e7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 116444531}
   - component: {fileID: 116444530}
   m_Layer: 8
-  m_Name: level 3 button (1)
+  m_Name: level 3 button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -599,7 +599,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 250, y: 100}
   m_EdgeRadius: 0
 --- !u!114 &116444531
 MonoBehaviour:
@@ -651,10 +651,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_NormalColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.30980393, b: 0.41176474, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_SelectedColor: {r: 1, g: 0.30980393, b: 0.41176474, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2237,7 +2237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OK
+  m_text: Play Again.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
   m_sharedMaterial: {fileID: -4990652677201031483, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
@@ -2771,7 +2771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 451dadb3abc2a3d41bb759de8fe37e7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 451dadb3abc2a3d41bb759de8fe37e7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4666,7 +4666,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OK
+  m_text: Play Again.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
   m_sharedMaterial: {fileID: -4990652677201031483, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
@@ -5362,7 +5362,8 @@ GameObject:
   - component: {fileID: 539236303}
   - component: {fileID: 539236302}
   - component: {fileID: 539236301}
-  m_Layer: 5
+  - component: {fileID: 539236304}
+  m_Layer: 8
   m_Name: Continue Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5484,6 +5485,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539236299}
   m_CullTransparentMesh: 1
+--- !u!61 &539236304
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539236299}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7f24cac05f2efe84faa2ff6fe59789cf, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1200, y: 100}
+  m_EdgeRadius: 0
 --- !u!1001 &539810715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5795,7 +5822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 9d9c667333ac6754abca0053c5667545, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 32
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 9d9c667333ac6754abca0053c5667545, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6473,7 +6500,8 @@ GameObject:
   m_Component:
   - component: {fileID: 692628866}
   - component: {fileID: 692628867}
-  m_Layer: 0
+  - component: {fileID: 692628868}
+  m_Layer: 2
   m_Name: Bonus region 1
   m_TagString: Bonus
   m_Icon: {fileID: 0}
@@ -6547,6 +6575,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &692628868
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692628865}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7f24cac05f2efe84faa2ff6fe59789cf, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &703537008
 GameObject:
   m_ObjectHideFlags: 0
@@ -7499,7 +7553,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue?
+  m_text: Play Again?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8454,7 +8508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 9d9c667333ac6754abca0053c5667545, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 9d9c667333ac6754abca0053c5667545, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8708,7 +8762,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.2, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9800,8 +9854,9 @@ GameObject:
   - component: {fileID: 1134260888}
   - component: {fileID: 1134260887}
   - component: {fileID: 1134260886}
-  m_Layer: 5
-  m_Name: Button
+  - component: {fileID: 1134260889}
+  m_Layer: 8
+  m_Name: play again Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9922,6 +9977,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134260884}
   m_CullTransparentMesh: 1
+--- !u!61 &1134260889
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134260884}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7f24cac05f2efe84faa2ff6fe59789cf, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1200, y: 100}
+  m_EdgeRadius: 0
 --- !u!1001 &1143108890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11135,8 +11216,8 @@ MonoBehaviour:
 
     ALERT STATE'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
+  m_sharedMaterial: {fileID: -4990652677201031483, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12144,8 +12225,8 @@ MonoBehaviour:
 
     QUANTUM TOWER'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
+  m_sharedMaterial: {fileID: -4990652677201031483, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -13354,10 +13435,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_NormalColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    m_HighlightedColor: {r: 0.023584902, g: 0.47475958, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_SelectedColor: {r: 0.023584902, g: 0.47475958, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -13610,7 +13691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: fc6178b29b9e30047890b81d92916e01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: fc6178b29b9e30047890b81d92916e01, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14250,8 +14331,9 @@ GameObject:
   - component: {fileID: 1789737646}
   - component: {fileID: 1789737645}
   - component: {fileID: 1789737644}
-  m_Layer: 5
-  m_Name: Button
+  - component: {fileID: 1789737647}
+  m_Layer: 8
+  m_Name: play again Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14372,6 +14454,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789737642}
   m_CullTransparentMesh: 1
+--- !u!61 &1789737647
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789737642}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7f24cac05f2efe84faa2ff6fe59789cf, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1200, y: 100}
+  m_EdgeRadius: 0
 --- !u!1 &1791440138
 GameObject:
   m_ObjectHideFlags: 0
@@ -14437,10 +14545,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.3301887, g: 0.3286312, b: 0.3286312, a: 1}
-    m_HighlightedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_NormalColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.72469443, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 0, b: 0.83878803, a: 1}
+    m_SelectedColor: {r: 1, g: 0.72469443, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14551,7 +14659,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 250, y: 100}
   m_EdgeRadius: 0
 --- !u!1001 &1794423127
 PrefabInstance:
@@ -15923,7 +16031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: fc6178b29b9e30047890b81d92916e01, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 34
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: fc6178b29b9e30047890b81d92916e01, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16067,7 +16175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2009761248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16642,8 +16750,8 @@ MonoBehaviour:
 
     DONSY STUDIO'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
+  m_sharedMaterial: {fileID: -4990652677201031483, guid: 8cf2b5c2152a7ad4180dcf8b301ba0f7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17231,7 +17339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 451dadb3abc2a3d41bb759de8fe37e7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 29
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3679924174979786816, guid: 451dadb3abc2a3d41bb759de8fe37e7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17338,6 +17446,10 @@ PrefabInstance:
       propertyPath: _bulletManager
       value: 
       objectReference: {fileID: 1522683521}
+    - target: {fileID: 120888584323288855, guid: 6b72532ec108d814391dac04a755efbc, type: 3}
+      propertyPath: _localHost
+      value: 146.169.136.107
+      objectReference: {fileID: 0}
     - target: {fileID: 2720270224059686829, guid: 6b72532ec108d814391dac04a755efbc, type: 3}
       propertyPath: buttonLayerMask.m_Bits
       value: 256
@@ -17478,7 +17590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
       propertyPath: bulletPrefabs.Array.size
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
       propertyPath: bulletPrefabs.Array.data[0].prefab
@@ -17585,6 +17697,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1130473964944104673, guid: c14f3f5684866d14bbc571d252178ae0, type: 3}
     - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
+      propertyPath: bulletPrefabs.Array.data[24].prefab
+      value: 
+      objectReference: {fileID: 2638071876479760446, guid: 101c7e5966cd31549bf6ef2d6fb6f988, type: 3}
+    - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
       propertyPath: bulletPrefabs.Array.data[2].MIDI_id
       value: 38
       objectReference: {fileID: 0}
@@ -17671,6 +17787,10 @@ PrefabInstance:
     - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
       propertyPath: bulletPrefabs.Array.data[23].MIDI_id
       value: 59
+      objectReference: {fileID: 0}
+    - target: {fileID: 6633362727253913889, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
+      propertyPath: bulletPrefabs.Array.data[24].MIDI_id
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6633362727253913890, guid: 0f464fbb130561e4db102a3fca5a5b96, type: 3}
       propertyPath: m_RootOrder

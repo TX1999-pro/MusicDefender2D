@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
         if (message.ToString(out var instruction))
         {
-            if (instruction == "click" )
+            if (instruction == "play" || instruction == "start" || instruction == "again")
             {
                 // invoke the button.onClick of the select button
                 TriggerSelectedButton();

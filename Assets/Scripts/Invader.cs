@@ -74,15 +74,18 @@ public class Invader : MonoBehaviour
             // then, if not match, play mismatch animation
             // misMatch();
         }
-        if (other.collider.CompareTag("Bonus"))
+
+    }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.collider.gameObject.CompareTag("Bonus"))
         {
             // if the invader enter the bonus region
             // invoke OSC transmitter message
+            GameManager._instance.SendOutMidi(m_pitch);
 
         }
-
     }
-
     private void OnDestroy()
     {
         FindObjectOfType<GameManager>()?.EnemyKilled(this.gameObject);
