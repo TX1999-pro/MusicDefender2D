@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3679924174979786821}
   - component: {fileID: -3091022861958334500}
   m_Layer: 7
-  m_Name: enemy_52_tab-4-2-E
+  m_Name: enemy_71_tab-12-2-B
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.19, y: 0, z: 0.01, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -147,9 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6fc77048fd0de43b78aadcfe1ff6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 0
   _pitchCodeBook: {fileID: 0}
-  m_pitch: 52
+  m_pitch: 59
   m_pitchColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6351324603824127376
 GameObject:
@@ -178,7 +177,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3679924174979786816}
   m_RootOrder: 0
@@ -224,14 +223,14 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 48ea5bd042015e1418f62c4ee6f0ebaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84094687619c79943a5d49670c3a77be, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.82, y: 0.52}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 2
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0

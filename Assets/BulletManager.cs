@@ -13,6 +13,8 @@ public class BulletManager : MonoBehaviour
     public List<BulletPrefab> bulletPrefabs;
 
     private Dictionary<string, GameObject> bulletDictionary;
+    public GameManager gameManager;
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class BulletManager : MonoBehaviour
         {
             bulletDictionary.Add(bulletPrefab.MIDI_id, bulletPrefab.prefab);
         }
+        gameManager = FindObjectOfType<GameManager>();
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     public GameObject InstantiateBullet(string bulletID, Vector3 position, Quaternion rotation)
@@ -30,6 +34,10 @@ public class BulletManager : MonoBehaviour
         {
             Debug.Log("Bullet MIDI: " + bulletID);
             GameObject bulletObject = Instantiate(bulletDictionary[bulletID].gameObject, position, rotation);
+
+            // send out position
+
+            gameManager.SendOutBulletPosition(bulletID, playerController.transform.position);
             return bulletObject;
         }
         else

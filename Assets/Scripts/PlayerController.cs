@@ -178,16 +178,41 @@ public class PlayerController : MonoBehaviour
                 // invoke the button.onClick of the select button
                 TriggerSelectedButton();
             }
-            if (instruction == "transform")
+            if (instruction == "transform" || instruction == "change")
             {
                 // update the player sprite,transform to lizard
                 SwitchAppearanceByIndex(1, 2);
 
             }
-            if (instruction == "back")
+            if (instruction == "back" || instruction == "reset")
             {
                 // update the player sprite, transform to human
                 SwitchAppearanceByIndex(2, 1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
 
         }

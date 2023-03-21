@@ -59,6 +59,13 @@ public class Invader : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.collider.gameObject.CompareTag("Bonus"))
+        {
+            // if the invader enter the bonus region
+            // invoke OSC transmitter message
+            FindObjectOfType<GameManager>().SendOutMidi(m_pitch);
+
+        }
         if (other.collider.GetComponent<Bullet>())
         {
             Bullet bulletInCollision = other.gameObject.GetComponent<Bullet>(); 
@@ -75,16 +82,6 @@ public class Invader : MonoBehaviour
             // misMatch();
         }
 
-    }
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.collider.gameObject.CompareTag("Bonus"))
-        {
-            // if the invader enter the bonus region
-            // invoke OSC transmitter message
-            GameManager._instance.SendOutMidi(m_pitch);
-
-        }
     }
     private void OnDestroy()
     {

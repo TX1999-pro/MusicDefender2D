@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
+    // this script is attached to the Canvas
     GameManager _gameManager;
     public Button level1_Button;
     public Button level2_Button;
@@ -13,6 +14,9 @@ public class LevelLoader : MonoBehaviour
     public GameObject level1_Object;
     public GameObject level2_Object;
     public GameObject level3_Object;
+    public SpriteRenderer level_1_bg;
+    public SpriteRenderer level_2_bg;
+    public SpriteRenderer level_3_bg;
 
 
     private void OnEnable()
@@ -37,24 +41,28 @@ public class LevelLoader : MonoBehaviour
     private void OnLevel1ButtonClick()
     {
 
-        StartCoroutine(Countdown(level1_Object));
+        StartCoroutine(Countdown(level1_Object, level_1_bg));
     }
 
     private void OnLevel2ButtonClick()
     {
-        StartCoroutine(Countdown(level2_Object));
+        StartCoroutine(Countdown(level2_Object, level_2_bg));
     }
 
     private void OnLevel3ButtonClick()
     {
-        StartCoroutine(Countdown(level3_Object));
+        StartCoroutine(Countdown(level3_Object, level_3_bg));
     }
 
-    private IEnumerator Countdown(GameObject levelObject)
+    private IEnumerator Countdown(GameObject levelObject, SpriteRenderer bg)
     {
         // 3-2-1-GO!
         menuCanvas.SetActive(false);
+        bg.gameObject.SetActive(true);
         _gameManager.backgroundAudio.Stop();
+
+        // turn on the background object
+
         // set the gameObject to be true
         _gameManager.countdownText.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.0f);
@@ -77,7 +85,7 @@ public class LevelLoader : MonoBehaviour
         // Hide the countdown text
         _gameManager.countdownText.gameObject.SetActive(false);
 
-        // Enable the desired behavior for your game objects (e.g., dropping down)
+        // Enable the level objects (it will drop down)
         levelObject.SetActive(true);
         _gameManager.StartSelectedLevel();
     }

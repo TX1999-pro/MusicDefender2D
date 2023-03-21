@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6fc77048fd0de43b78aadcfe1ff6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fallSpeed: 0
   _pitchCodeBook: {fileID: 0}
   m_pitch: 62
   m_pitchColor: {r: 0, g: 0, b: 0, a: 0}
@@ -232,5 +233,5 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0

@@ -1,3 +1,4 @@
+using extOSC;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     internal static GameManager _instance;
+    public OSCTransmitter transmitter;
+    public string osc_listener_address = "/game/midiout";
+    public string osc_position_address = "/game/player/position";
     internal void PlaySfx(AudioClip clip) => sfx.PlayOneShot(clip);
 
     [SerializeField] private AudioSource sfx;
@@ -94,7 +98,9 @@ public class GameManager : MonoBehaviour
         _coinSpawner = GetComponent<CoinSpawner>();
         musicToggle.onValueChanged.AddListener(ToggleMusic);
         backgroundAudio = GetComponent<AudioSource>();
-        ToggleMusic(false);
+        ToggleMusic(true);
+
+        transmitter = GetComponent<OSCTransmitter>();
 
     }
 
@@ -115,6 +121,30 @@ public class GameManager : MonoBehaviour
     {
         // Your logic to update the string value
         Debug.Log("MIDI note out: " + note);
+        // Create message
+        var message = new OSCMessage(osc_listener_address);
+
+        // Populate values.
+        message.AddValue(OSCValue.String(note));
+
+        // Send message
+        transmitter.Send(message);
+    }
+
+    public void SendOutBulletPosition(string note, Vector3 playerPosition)
+    {
+        // Your logic to update the string value
+        Debug.Log("Position: " + playerPosition);
+        // Create message
+        var message = new OSCMessage(osc_position_address); //"game/player/position"
+
+        // Populate values (float
+        message.AddValue(OSCValue.String(note));
+        message.AddValue(OSCValue.Float(playerPosition.x));
+        //message.AddValue(OSCValue.Float(playerPosition.y));
+
+        // Send message
+        transmitter.Send(message);
     }
 
     #region cheat and speed
