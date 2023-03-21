@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
     #region cheat and speed
     public void UpdateEnemySpeed()
     {
-        dropSpeed = dropSpeedSlider.value * 0.5f + 0.5f; // set dropSpeed
+        dropSpeed = dropSpeedSlider.value * 0.05f + 0.25f; // set dropSpeed
         // 0.5 is a trial and verified value
         // range = (0.5, 1)
         dropSpeedText.text = "x"+(dropSpeed*2).ToString("F2");
